@@ -1,0 +1,26 @@
+name: Validate autoencoder demo
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements-lock.txt
+      - run: python -m pip install --no-deps -e .
+      - run: python -m unittest discover -s tests -v
+      - run: python -m coupon_autoencoder run --output artifacts/local/ci --seed 42
+      - run: python -m coupon_autoencoder score --model artifacts/local/ci/model.json --input artifacts/local/ci/inference_example.csv --output artifacts/local/ci/scored.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-benchmark
+          path: artifacts/local/ci/

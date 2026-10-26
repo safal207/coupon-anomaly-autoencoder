@@ -1,0 +1,149 @@
+{
+  "seed": 42,
+  "data_source": "synthetic_only",
+  "n_features": 12,
+  "split_unit": "day_index",
+  "same_employees_across_periods": true,
+  "splits": {
+    "train": {
+      "rows": 3600,
+      "anomalies": 0,
+      "first_day": 0,
+      "last_day": 59
+    },
+    "validation": {
+      "rows": 1800,
+      "anomalies": 0,
+      "first_day": 60,
+      "last_day": 89
+    },
+    "test": {
+      "rows": 1800,
+      "anomalies": 90,
+      "first_day": 90,
+      "last_day": 119
+    }
+  },
+  "threshold_method": "99th percentile of later normal validation scores, higher quantile",
+  "label_use": "evaluation_only; no labels or test rows in model fitting or threshold selection",
+  "autoencoder": {
+    "layers": [
+      12,
+      24,
+      6,
+      24,
+      12
+    ],
+    "hidden_activation": "tanh",
+    "output_activation": "identity",
+    "epochs": 250,
+    "initial_training_loss": 0.4592014633550341,
+    "final_training_loss": 0.07734582250754621,
+    "warnings": [
+      "Stochastic Optimizer: Maximum iterations (250) reached and the optimization hasn't converged yet."
+    ]
+  },
+  "normal_validation_alert_rates": {
+    "autoencoder": 0.009444444444444445,
+    "pca": 0.009444444444444445,
+    "isolation_forest": 0.009444444444444445,
+    "max_abs_z_rule": 0.009444444444444445
+  },
+  "models": {
+    "autoencoder": {
+      "threshold": 0.5644749108325305,
+      "average_precision": 0.8755874159224498,
+      "roc_auc": 0.9767446393762182,
+      "precision": 0.8452380952380952,
+      "recall": 0.7888888888888889,
+      "f1": 0.8160919540229885,
+      "false_positive_rate": 0.00760233918128655,
+      "alert_count": 84,
+      "tn": 1697,
+      "fp": 13,
+      "fn": 19,
+      "tp": 71
+    },
+    "pca": {
+      "threshold": 0.8715993871900781,
+      "average_precision": 0.8369335648906933,
+      "roc_auc": 0.9541845354126056,
+      "precision": 0.8414634146341463,
+      "recall": 0.7666666666666667,
+      "f1": 0.8023255813953488,
+      "false_positive_rate": 0.00760233918128655,
+      "alert_count": 82,
+      "tn": 1697,
+      "fp": 13,
+      "fn": 21,
+      "tp": 69
+    },
+    "isolation_forest": {
+      "threshold": 0.5973319417298508,
+      "average_precision": 0.6571021458949617,
+      "roc_auc": 0.967251461988304,
+      "precision": 0.7454545454545455,
+      "recall": 0.45555555555555555,
+      "f1": 0.5655172413793104,
+      "false_positive_rate": 0.008187134502923977,
+      "alert_count": 55,
+      "tn": 1696,
+      "fp": 14,
+      "fn": 49,
+      "tp": 41
+    },
+    "max_abs_z_rule": {
+      "threshold": 4.204482298161828,
+      "average_precision": 0.8590153483665154,
+      "roc_auc": 0.9662443144899284,
+      "precision": 0.75,
+      "recall": 0.8,
+      "f1": 0.7741935483870968,
+      "false_positive_rate": 0.014035087719298246,
+      "alert_count": 96,
+      "tn": 1686,
+      "fp": 24,
+      "fn": 18,
+      "tp": 72
+    }
+  },
+  "autoencoder_subgroups": {
+    "after_hours": {
+      "count": 22,
+      "alert_count": 22,
+      "alert_rate": 1.0
+    },
+    "bulk_printing": {
+      "count": 23,
+      "alert_count": 23,
+      "alert_rate": 1.0
+    },
+    "legitimate_busy": {
+      "count": 60,
+      "alert_count": 1,
+      "alert_rate": 0.016666666666666666
+    },
+    "normal": {
+      "count": 1650,
+      "alert_count": 12,
+      "alert_rate": 0.007272727272727273
+    },
+    "repeat_use": {
+      "count": 23,
+      "alert_count": 23,
+      "alert_rate": 1.0
+    },
+    "subtle_mismatch": {
+      "count": 22,
+      "alert_count": 3,
+      "alert_rate": 0.13636363636363635
+    }
+  },
+  "versions": {
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.2"
+  },
+  "dataset_sha256": "9044e181bdb3132863c1a1d27448bca909bbe72a87257ba11a164fd474e78dde"
+}
